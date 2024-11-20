@@ -157,6 +157,15 @@ resource "google_sql_database_instance" "primary" {
         update_track = var.maintenance_config.maintenance_window.update_track
       }
     }
+
+    # pending https://github.com/GoogleCloudPlatform/cloud-foundation-fabric/issues/2722
+    password_validation_policy {
+      complexity                  = "COMPLEXITY_DEFAULT"
+      disallow_username_substring = true
+      enable_password_policy      = true
+      min_length                  = 10
+      reuse_interval              = 0
+    }
   }
   deletion_protection = var.terraform_deletion_protection
 }
